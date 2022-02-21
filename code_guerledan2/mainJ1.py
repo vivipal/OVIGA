@@ -53,7 +53,7 @@ with open(filename,'w') as log:
     lat,lon = get_gps()
 
     for i in range(nb_wp): # on parcourt tt les waypoints
-        print("going to ", i)
+        print("going to the wp n°", i)
         next_wp = WPs[(i+1)%nb_wp]
         while not waypoint_passed(next_wp,WPs[i],(lat,lon)) or coords_dist((lat,lon),next_wp)<5 : # tant qu'on a pas passé le next_waypoint
             try :
