@@ -24,9 +24,6 @@ x2 = np.array([[ 2879.66666667 , -203.    ,      3911.33333333]]).T
 x3 = np.array([[ 3988.    ,     -2190.    ,      1713.33333333]]).T
 
 
-
-
-
 b = -(x1+xm1)/2
 beta = 46000 # champ magnétique a la surface de la terre
 A = 1/beta * np.hstack((x1+b,x2+b,x3+b))
@@ -146,7 +143,7 @@ def cvt_gll_ddmm_2_dd (st):
     return olat,olon
 
 
-def coord2cart(coords,coords_ref=(48.19924,-3.01461)):
+def coord2cart(coords,coords_ref=(48.198802 -3.014848)):
     '''
     in :
         coords = (lat,lon)
