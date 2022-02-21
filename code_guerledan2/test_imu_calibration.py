@@ -9,8 +9,9 @@ from ddboat_tools import *
 
 imu = Imu9IO()
 
-raw_imu = imu.read_mag_raw()
+while (1) :
+	raw_imu = imu.read_mag_raw()
 
-cap = get_compass_from_raw(raw_imu)
+	cap = get_compass_from_raw(raw_imu)
 
-print(cap)
+	print(cap)
