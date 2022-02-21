@@ -39,7 +39,7 @@ X,Y = [],[]
 
 
 
-WPs = [(48.198802 -3.014848),(48.1992526, -3.0151409),(48.198802, -3.014848)]
+WPs = [(48,1989495, -3,0148023),(48.1992526, -3.0151409),(48,1989495, -3,0148023)]
 nb_wp = len(WPs)
 t0 = time.time()
 
@@ -53,6 +53,7 @@ with open(filename,'w') as log:
     lat,lon = get_gps()
 
     for i in range(nb_wp): # on parcourt tt les waypoints
+        print("going to ", i)
         next_wp = WPs[(i+1)%nb_wp]
         while not waypoint_passed(next_wp,WPs[i],(lat,lon)) or coords_dist((lat,lon),next_wp)<5 : # tant qu'on a pas passé le next_waypoint
             try :
