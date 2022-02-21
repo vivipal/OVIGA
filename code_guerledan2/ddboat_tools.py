@@ -143,7 +143,7 @@ def cvt_gll_ddmm_2_dd (st):
     return olat,olon
 
 
-def coord2cart(coords,coords_ref=(48.198802 -3.014848)):
+def coord2cart(coords,coords_ref=(48.198802, -3.014848)):
     '''
     in :
         coords = (lat,lon)
