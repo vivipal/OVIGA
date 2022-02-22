@@ -181,6 +181,24 @@ def coord2cart(coords,coords_ref=(48.198802, -3.014848)):
 
     return np.array([[x_tilde,y_tilde]]).T
 
+def cart2coord(pos,coords_ref=(48.198802, -3.014848)):
+    '''
+    in :
+        coords = (lat,lon)
+        coords_ref = centre du plan
+    return :
+        x_tilde et y_tilde coord sur le plan centre en coord_ref
+    '''
+
+
+    x,y = pos
+    lym,lxm = coords_ref
+
+    ly = y/R + lym
+    lx = lxm + x/(R*cos(ly))
+
+    return np.array([[ly,lx]]).T
+
 def follow_line(a,b,m,r=6) :
     '''
     in :
