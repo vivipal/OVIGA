@@ -4,8 +4,24 @@ from roblib import *  # available at https://www.ensta-bretagne.fr/jaulin/roblib
 
 def f(x,u):
     x,u=x.flatten(),u.flatten()
-    xdot = array([[x[3]*cos(x[2])],[x[3]*sin(x[2])],[u[0]],[u[1]]])
+    xdot = array([[x[3]*cos(x[2])],[x[3]*sin(x[2])],[u[1]],[u[0]]])
     return(xdot)
+
+def control_fb(x,w,dw,ddw):
+    x1, x2, x3, x4 = x.flatten()
+
+    Ax = array([[cos(x3), -x4*sin(x3)],
+                [sin(x3), x4*cos(x3)]])
+    y = array([[x1],
+               [x2]])
+    dy = array([[x4*cos(x3)],
+                [x4*sin(x3)]])
+
+    ddy = w-y + 2*(dw-dy) + ddw
+
+    u = inv(Ax)@ddy
+
+    return u
 
 def control(x,w,dw):
     x1, x2, x3, x4 = x.flatten()
@@ -17,10 +33,8 @@ def control(x,w,dw):
     dy = array([[x4*cos(x3)],
                 [x4*sin(x3)]])
 
-    K = 10
+    K = 100
     ddy = K*sign((w-y + (dw-dy)))
-
-    # ddy = w-y + 2*(dw-dy) + ddw
 
     u = inv(Ax)@ddy
 
@@ -48,5 +62,6 @@ for t in arange(0,30,dt) :
     ddw=array([[-R2*k**2*cos(k*t + phi)], [-k**2*R2*sin(k*t + phi)]])
     draw_disk(ax,w,0.5,"red")
     u=control(x,w,dw)
+    # u=control_fb(x,w,dw,ddw)
     x = x + dt*f(x,u)
     draw_tank(x,'red')
