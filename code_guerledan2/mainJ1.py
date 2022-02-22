@@ -55,6 +55,7 @@ with open(filename,'w') as log:
     for i in range(nb_wp): # on parcourt tt les waypoints
         print("going to the wp n°", i)
         next_wp = WPs[(i+1)%nb_wp]
+        j = 0
         while not waypoint_passed(next_wp,WPs[i],(lat,lon)) or coords_dist((lat,lon),next_wp)<5 : # tant qu'on a pas passé le next_waypoint
             try :
                 lat,lon = get_gps()
@@ -74,8 +75,8 @@ with open(filename,'w') as log:
 
             # print("\nt={:.3f}\n heading to {} wp\n {} {}\n cap consigne : {:.0f} cap réel : {:.0f}\n u1 = {} u2 = {}\n w1= {} w2 = {}\n\n\n----------------".format(time.time()-t0,i+1,lat,lon,cap_cons*180/np.pi,cap*180/np.pi,u1,u2,w1_cons,w2_cons))
             log.write("{};{};{};{};{};{}\n".format(time.time()-t0,i+1,lat,lon,cap_cons,cap))
-            i = 0
-            print(i)
-            i += 1
+
+            print(j)
+            j += 1
 
         time.sleep(0.5)
