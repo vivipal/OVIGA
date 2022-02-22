@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import time
 
 import arduino_driver_v2 as arddrv
