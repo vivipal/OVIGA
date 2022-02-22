@@ -40,28 +40,28 @@ def control(x,w,dw):
 
     return u
 
+if __name__ == "__main__":
+    ax=init_figure(-50,50,-50,50)
+    x = array([[10],[0],[1],[1]])
+    dt = 0.02
+    x = array([[10],[0],[1],[1]])
+    R2 = 30
+    T = 2*pi
+    N = 1
+    nbato = 1
+    a1, a2 = 0,0
 
-ax=init_figure(-50,50,-50,50)
-x = array([[10],[0],[1],[1]])
-dt = 0.02
-x = array([[10],[0],[1],[1]])
-R2 = 30
-T = 2*pi
-N = 1
-nbato = 1
-a1, a2 = 0,0
+    for t in arange(0,30,dt) :
+        clear(ax)
+        # plot(L*cos(s), L*sin(3*s),color='magenta')
 
-for t in arange(0,30,dt) :
-    clear(ax)
-    # plot(L*cos(s), L*sin(3*s),color='magenta')
-
-    k = 2*pi/T
-    phi = 2*pi*nbato/N
-    w=array([[a1 + R2*cos(k*t + phi)], [a2 + R2*sin(k*t + phi)]])
-    dw=array([[-R2*k*sin(k*t + phi)], [k*R2*cos(k*t + phi)]])
-    ddw=array([[-R2*k**2*cos(k*t + phi)], [-k**2*R2*sin(k*t + phi)]])
-    draw_disk(ax,w,0.5,"red")
-    u=control(x,w,dw)
-    # u=control_fb(x,w,dw,ddw)
-    x = x + dt*f(x,u)
-    draw_tank(x,'red')
+        k = 2*pi/T
+        phi = 2*pi*nbato/N
+        w=array([[a1 + R2*cos(k*t + phi)], [a2 + R2*sin(k*t + phi)]])
+        dw=array([[-R2*k*sin(k*t + phi)], [k*R2*cos(k*t + phi)]])
+        ddw=array([[-R2*k**2*cos(k*t + phi)], [-k**2*R2*sin(k*t + phi)]])
+        draw_disk(ax,w,0.5,"red")
+        u=control(x,w,dw)
+        # u=control_fb(x,w,dw,ddw)
+        x = x + dt*f(x,u)
+        draw_tank(x,'red')
