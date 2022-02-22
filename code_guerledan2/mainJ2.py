@@ -34,15 +34,14 @@ w1_cons,w2_cons=125,125
 X,Y = [],[]
 
 point_depart = (48.1989495, -3.0148023)
-a1 =
-a2 =
+a1, a2 = 48.19881166666667,-3.0156366666666665
 R1 = 70
-nbato = 12
+nbato = 9
 alphai = nbato*2*pi/9
 point_cercle = (a1 + R1*cos(alphai), a2 + R1*sin(alphai))
 point_bouee = (48.19926166, -3.01513833)
 
-WPs = [point_depart,point_bouee,point_depart]
+WPs = [point_depart,point_bouee]
 
 nb_wp = len(WPs)
 t0 = time.time()

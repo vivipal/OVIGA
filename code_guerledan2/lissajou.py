@@ -41,7 +41,8 @@ def control(x,w,dw):
     return u
 
 if __name__ == "__main__":
-    ax=init_figure(-50,50,-50,50)
+    a1, a2 = 48.19881166666667,-3.0156366666666665
+    ax=init_figure(a1-50,a1+50,a2-50,a2+50)
     x = array([[10],[0],[1],[1]])
     dt = 0.02
     x = array([[10],[0],[1],[1]])
@@ -49,7 +50,6 @@ if __name__ == "__main__":
     T = 2*pi
     N = 1
     nbato = 1
-    a1, a2 = 0,0
 
     for t in arange(0,30,dt) :
         clear(ax)
