@@ -82,7 +82,7 @@ with open(filename,'w') as log:
             raw_imu = imu.read_mag_raw()
             cap = get_compass_from_raw(raw_imu)
             cap_cons = follow_line_coord(WPs[i],next_wp,(lat,lon),6) - np.pi
-            print(cap, cap_cons)
+            # print(cap, cap_cons)
             dt = time.time() - t_motor
             if dt > 0.05:
                 w1_cons, w2_cons = cmdcap(cap_cons,cap)
