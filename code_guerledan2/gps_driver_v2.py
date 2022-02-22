@@ -28,6 +28,11 @@ class GpsIO:
         #print (v)
         return v
 
+    def get_sentence(self,v) :
+        return v[0:6])
+
+
+
     # read the position in the GPGLL message
     # by default one GPGLL message is expected every 20 messages
     # warning: blocking function, not to use in control loops
@@ -83,19 +88,26 @@ class GpsIO:
         if len(v)>0:
             st=v.decode("utf-8")
             if str(st[0:6]) == "$GPGLL":
-                vv = st.split(",")
-                if len(vv[1]) > 0:
-                    val[0] = float(vv[1])
-                if len(vv[2]) > 0:
-                    val[1] = vv[2]
-                if len(vv[3]) > 0:
-                    val[2] = float(vv[3])
-                if len(vv[4]) > 0:
-                    val[3] = vv[4]
-                if len(vv[5]) > 0:
-                    val[4] = float(vv[5])
+                val = self.get_gps_data(st)
                 msg=True
         return msg,val
+
+    def get_gps_data(self,st) :
+        val=[0.,'N',0.,'W',0.]
+        vv = st.split(",")
+        if len(vv[1]) > 0:
+            val[0] = float(vv[1])
+        if len(vv[2]) > 0:
+            val[1] = vv[2]
+        if len(vv[3]) > 0:
+            val[2] = float(vv[3])
+        if len(vv[4]) > 0:
+            val[3] = vv[4]
+        if len(vv[5]) > 0:
+            val[4] = float(vv[5])
+
+        return val
+
 
     def read_vtg_non_blocking(self,timeout=0.01):
         self.ser.timeout=timeout
@@ -105,11 +117,17 @@ class GpsIO:
         if len(v)>0:
             st=v.decode("utf-8")
             if str(st[0:6]) == "$GPVTG":
-                vv = st.split(",")
-                if len(vv[7]) > 0:
-                    val = float(vv[7])
+                val = self.get_speed_data(st)
                 msg=True
         return msg,val
+
+    def get_speed_data(self,st) :
+        val=0
+        vv = st.split(",")
+        if len(vv[7]) > 0:
+            val = float(vv[7])
+        return val
+
 
 
 if __name__ == "__main__":

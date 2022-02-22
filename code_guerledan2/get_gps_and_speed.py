@@ -12,10 +12,20 @@ gps = gpsdrv.GpsIO()
 while 1 :
 
 
-    v = read_next_message(self)
+    v = gps.read_next_message()
 
-    print(v)
+    if len(v) > 0 :
 
+        sentence_id = gps.get_sentence(v)
+
+        if sentence_id == "$GPGLL" :
+            gps_data = gps.get_gps_data(v)
+            print(gps_data)
+
+        else if sentence_id == "$GPVTG" :
+            speed_data = gps.get_speed_data(v)
+            print(speed_data)
+            
     time.sleep(0.1)
 
 
