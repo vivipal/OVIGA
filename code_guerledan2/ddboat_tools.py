@@ -86,6 +86,21 @@ def cmdcap(cap, cap_cons = 0, v_neutre = 200, theta_lim=np.pi/3):
 
     return(w1_cons,w2_cons)
 
+def cmdlissajou(u,w_max_old):
+    print("u={}".format(u))
+    Kacc=1
+    Krot=1
+    print("w_max={}  |  w_min={}".format(w_max_old +Kacc*u[0] , w_max -Krot*abs(u[1])))
+    w_max = min(vmax,max(0,w_max_old +Kacc*u[0]))
+    w_min = min(vmax,max(0,w_max -Krot*abs(u[1])))
+    if u[1]>0:
+        w1_cons=w_max
+        w2_cons=w_min
+    else:
+        w1_cons=w_min
+        w2_cons=w_max
+    return(w1_cons,w2_cons,w_max)
+
 def correct_measure(raw) :
 
     return  npl.inv(A)@(np.array([raw]).T+b)
