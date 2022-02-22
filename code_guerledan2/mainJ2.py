@@ -123,5 +123,20 @@ with open(filename,'w') as log:
                     ard.send_arduino_cmd_motor(u1,u2)
 
     #En lissajou :
-    x = array([[get_gps()[0]],[get_gps()[1]],[get_compass_from_raw(raw_imu)],[0.5]])
-    u = lissajou(x)
+    while True:
+        x = array([[get_gps()[0]],[get_gps()[1]],[get_compass_from_raw(raw_imu)],[0.5]])
+        u = lissajou(x)
+        wmax_old=(w1_cons+w2_cons)/2
+
+        dt = time.time() - t_motor
+        if dt > 0.05:
+            w1_cons, w2_cons, w_max_old = cmdlissajou(u,w_max_old)
+            try:
+                old_odo1,old_odo2,u1,u2 = cmd_moteur(encod,old_odo1,old_odo2,dt,u1,u2,w1_cons,w2_cons)
+            except :
+                print("Erreur encodeur")
+            t_motor = time.time()
+            ard.send_arduino_cmd_motor(u1,u2)
+
+        # print("\nt={:.3f}\n heading to {} wp\n {} {}\n cap consigne : {:.0f} cap réel : {:.0f}\n u1 = {} u2 = {}\n w1= {} w2 = {}\n\n\n----------------".format(time.time()-t0,i+1,lat,lon,cap_cons*180/np.pi,cap*180/np.pi,u1,u2,w1_cons,w2_cons))
+        log.write("{};{};{};{};{};{}\n".format(time.time()-t0,i+1,lat,lon,cap_cons,cap))

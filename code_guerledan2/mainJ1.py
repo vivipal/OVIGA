@@ -46,7 +46,7 @@ t0 = time.time()
 
 
 
-filename = "jour_1-"+time.strftime("%d-%H:%M:%S")+".log"
+filename = "log/jour_1-"+time.strftime("%d-%H:%M:%S")+".log"
 
 
 with open(filename,'w') as log:
@@ -63,7 +63,7 @@ with open(filename,'w') as log:
                 pass
             raw_imu = imu.read_mag_raw()
             cap = get_compass_from_raw(raw_imu)
-            cap_cons = follow_line_coord(WPs[i],next_wp,(lat,lon),6)
+            cap_cons = follow_line_coord(WPs[i],next_wp,(lat,lon),6) - np.pi
 
             dt = time.time() - t_motor
             if dt > 0.05:
