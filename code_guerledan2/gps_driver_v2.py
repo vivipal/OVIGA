@@ -29,7 +29,7 @@ class GpsIO:
         return v
 
     def get_sentence(self,v) :
-        return v[0:6])
+        return v[0:6]
 
 
 
