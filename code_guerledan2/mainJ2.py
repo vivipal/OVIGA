@@ -5,6 +5,7 @@ import arduino_driver_v2 as arddrv
 import encoders_driver_v2 as encoddrv
 from imu9_driver_v2 import Imu9IO
 import gpxpy.gpx
+from datetime import datetime
 
 from ddboat_tools import *
 
