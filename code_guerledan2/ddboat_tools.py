@@ -45,10 +45,11 @@ def regu_mot(w_cons, w_reel, u, K):
 
 def cmd_moteur(encod,old_odo1,old_odo2,dt,u1,u2,w1_cons,w2_cons,Km1=0.2,Km2=0.2):
     """ Fonction régulation en vitesse des moteurs """
+    print("a1")
     encod.get_sync()
-
+    print("a2")
     sync,data_encoders = encod.read_packet(debug=False)
-
+    print("a3")
     # w1_reel = -(old_odo1 - data_encoders[3]) / (8*dt)
     # w2_reel = -(data_encoders[4] - old_odo2) / (8*dt)
 
@@ -56,7 +57,9 @@ def cmd_moteur(encod,old_odo1,old_odo2,dt,u1,u2,w1_cons,w2_cons,Km1=0.2,Km2=0.2)
     w1_reel = ((2**13)/(2*np.pi*dt)) * sin( (2*np.pi/2**16) * (data_encoders[3] - old_odo1))
     w2_reel = ((2**13)/(2*np.pi*dt)) * sin( (2*np.pi/2**16) * (old_odo2 - data_encoders[4]))
 
+    print("a4")
     old_odo1,old_odo2 = data_encoders[3],data_encoders[4]
+    print("a5")
     # print("Vitesses réelles: w1={}, w2={}".format(w1_reel,w2_reel))
 
     u1 = max(0,min(regu_mot(w1_cons, w1_reel, u1, Km1),vmax))
