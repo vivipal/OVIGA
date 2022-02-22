@@ -50,7 +50,7 @@ filename = "log/jour_2_vivi-"+time.strftime("%d-%H:%M:%S")+".log"
 start_min = 44
 start_h = 17
 start_d = 17
-start_m = 02
+start_m = 2
 start_y = 2022
 
 temps_attente = 3
