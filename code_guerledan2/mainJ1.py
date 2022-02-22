@@ -40,7 +40,7 @@ X,Y = [],[]
 
 
 
-WPs = [(48,1989495, -3,0148023),(48.19926166, -3.01513833),(48,1989495, -3,0148023)]
+WPs = [(48.1989495, -3.0148023),(48.19926166, -3.01513833),(48.1989495, -3.0148023)]
 nb_wp = len(WPs)
 t0 = time.time()
 
@@ -63,7 +63,7 @@ with open(filename,'w') as log:
                 pass
             raw_imu = imu.read_mag_raw()
             cap = get_compass_from_raw(raw_imu)
-            cap_cons = follow_line_coord(WPs[i],next_wp,(lat,lon),6)
+            cap_cons = follow_line_coord(WPs[i],next_wp,(lat,lon),6) - np.pi
 
             dt = time.time() - t_motor
             if dt > 0.05:

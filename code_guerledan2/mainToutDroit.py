@@ -36,7 +36,7 @@ u1,u2 = 0,0
 w1_cons,w2_cons=125,125
 X,Y = [],[]
 t0 = time.time()
-
+i=0
 filename = "calib_vitesse"+time.strftime("%d-%H:%M:%S")+".log"
 
 
@@ -56,7 +56,7 @@ with open(filename,'w') as log:
             t_motor = time.time()
             #print("Consignes: u1={}, u2={}".format(round(u1,4),round(u2,4)))
             ard.send_arduino_cmd_motor(u1,u2)
-
+        i=i+1
         # print("\nt={:.3f}\n heading to {} wp\n {} {}\n cap consigne : {:.0f} cap réel : {:.0f}\n u1 = {} u2 = {}\n w1= {} w2 = {}\n\n\n----------------".format(time.time()-t0,i+1,lat,lon,cap_cons*180/np.pi,cap*180/np.pi,u1,u2,w1_cons,w2_cons))
         log.write("{};{};{};{};{};{};{};{}\n".format(time.time()-t0,i+1,lat,lon,cap_cons,cap,u1,u2))
 
@@ -74,6 +74,6 @@ with open(filename,'w') as log:
             t_motor = time.time()
             #print("Consignes: u1={}, u2={}".format(round(u1,4),round(u2,4)))
             ard.send_arduino_cmd_motor(u1,u2)
-
+        i=i+1
         # print("\nt={:.3f}\n heading to {} wp\n {} {}\n cap consigne : {:.0f} cap réel : {:.0f}\n u1 = {} u2 = {}\n w1= {} w2 = {}\n\n\n----------------".format(time.time()-t0,i+1,lat,lon,cap_cons*180/np.pi,cap*180/np.pi,u1,u2,w1_cons,w2_cons))
         log.write("{};{};{};{};{};{};{};{}\n".format(time.time()-t0,i+1,lat,lon,cap_cons,cap,u1,u2))
