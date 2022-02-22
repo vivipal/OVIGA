@@ -46,7 +46,7 @@ t0 = time.time()
 
 
 
-filename = "jour_1-"+time.strftime("%d-%H:%M:%S")+".log"
+filename = "log/jour_1-"+time.strftime("%d-%H:%M:%S")+".log"
 
 
 with open(filename,'w') as log:

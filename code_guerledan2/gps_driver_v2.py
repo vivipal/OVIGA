@@ -12,17 +12,17 @@ class GpsIO:
         self.init_line()
         #time.sleep(1.0)
         #print(ser)
-   
+
     def init_line(self,timeout=1.0):
         self.ser = serial.Serial('/dev/ttyS0',timeout=timeout)
 
     def init_line_devname_baudrate(self,devname,baudrate,timeout=1.0):
         self.ser = serial.Serial(devname,baudrate=baudrate,timeout=timeout,xonxoff=False, rtscts=False, dsrdtr=False)
-        
+
     def close(self):
         self.ser.close()
 
-        
+
     def read_next_message(self):
         v=self.ser.readline().decode("utf-8")
         #print (v)
@@ -30,7 +30,7 @@ class GpsIO:
 
     # read the position in the GPGLL message
     # by default one GPGLL message is expected every 20 messages
-    # warning: blocking function, not to use in control loops 
+    # warning: blocking function, not to use in control loops
     def read_gll(self,n_try_max=20):
         val=[0.,'N',0.,'W',0.]
         for i in range(n_try_max):
@@ -57,6 +57,24 @@ class GpsIO:
                     break # GPGLL found !  exit !
         return val
 
+    def read_vtg(self,n_try_max=20):
+        val=0
+        for i in range(n_try_max):
+            rdok = True
+            try:
+                v=self.ser.readline().decode("utf-8")
+            except:
+                print ("error reading speed !!")
+                rdok = False
+                break # go out
+            if rdok:
+                if str(v[0:6]) == "$GPVTG":
+                    vv = v.split(",")
+                    if len(vv[7]) > 0:
+                        val[0] = float(vv[7])
+                    break # GPVTG found !  exit !
+        return val
+
     def read_gll_non_blocking(self,timeout=0.01):
         self.ser.timeout=timeout
         v=self.ser.readline()
@@ -78,8 +96,22 @@ class GpsIO:
                     val[4] = float(vv[5])
                 msg=True
         return msg,val
-        
-    
+
+    def read_vtg_non_blocking(self,timeout=0.01):
+        self.ser.timeout=timeout
+        v=self.ser.readline()
+        msg=False
+        val=0
+        if len(v)>0:
+            st=v.decode("utf-8")
+            if str(st[0:6]) == "$GPVTG":
+                vv = st.split(",")
+                if len(vv[7]) > 0:
+                    val[0] = float(vv[7])
+                msg=True
+        return msg,val
+
+
 if __name__ == "__main__":
     gps = GpsIO()
 
@@ -91,12 +123,23 @@ if __name__ == "__main__":
     #for i in range(20):
     #    print (gps.read_gll())
 
-    # test non blocking read for 20 positions
+    # # test non blocking read for 20 positions
+    # cnt=0
+    # while True:
+    #     gll_ok,gll_data=gps.read_gll_non_blocking()
+    #     if gll_ok:
+    #         print (gll_data)
+    #         cnt += 1
+    #         if cnt==20:
+    #             break
+    #     time.sleep(0.01)
+
+    # test non blocking read for 20 speeds
     cnt=0
     while True:
-        gll_ok,gll_data=gps.read_gll_non_blocking()
+        vtg_ok,vtg_data=gps.read_vtg_non_blocking()
         if gll_ok:
-            print (gll_data)
+            print (vtg_data)
             cnt += 1
             if cnt==20:
                 break
