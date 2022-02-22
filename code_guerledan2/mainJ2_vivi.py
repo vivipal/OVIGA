@@ -24,11 +24,6 @@ def get_gps():
 imu = Imu9IO()
 
 ard = arddrv.ArduinoIO()
-encod = encoddrv.EncoderIO()
-encod.get_sync()
-
-sync,data_encoders = encod.read_packet(debug=False)
-old_odo1,old_odo2 = data_encoders[3], data_encoders[4]
 
 t_motor = time.time()
 u1,u2 = 0,0
@@ -52,11 +47,11 @@ t0 = time.time()
 filename = "log/jour_2_vivi-"+time.strftime("%d-%H:%M:%S")+".log"
 
 #Définition des heures de départ
-start_min = 30
-start_h = 10
-start_d = 8
-start_m = 10
-start_y = 2021
+start_min = 44
+start_h = 17
+start_d = 17
+start_m = 02
+start_y = 2022
 
 temps_attente = 3
 
@@ -68,6 +63,12 @@ while datetime.now() < datetime_start :
     time.sleep(1)
 
 t0 = time.time() # use to display time in log
+
+encod = encoddrv.EncoderIO()
+encod.get_sync()
+
+sync,data_encoders = encod.read_packet(debug=False)
+old_odo1,old_odo2 = data_encoders[3], data_encoders[4]
 
 with open(filename,'w') as log:
 
