@@ -126,7 +126,6 @@ with open(filename,'w') as log:
                     t_motor = time.time()
                     ard.send_arduino_cmd_motor(u1,u2)
 
-    print("LISSAJOU")
     #En lissajou :
     while True:
         try :
