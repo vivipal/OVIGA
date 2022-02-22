@@ -67,7 +67,7 @@ with open(filename,'w') as log:
             dt = time.time() - t_motor
             if dt > 0.05:
                 w1_cons, w2_cons = cmdcap(cap_cons,cap)
-                old_odo1,old_odo2,u1,u2 = cmd_moteur(encod,old_odo1,old_odo2,dt,u1,u2,w1_cons,w2_cons)
+                old_odo1,old_odo2,u1,u2 = cmd_moteur(data_encoders,old_odo1,old_odo2,dt,u1,u2,w1_cons,w2_cons)
                 t_motor = time.time()
                 #print("Consignes: u1={}, u2={}".format(round(u1,4),round(u2,4)))
                 ard.send_arduino_cmd_motor(u1,u2)
