@@ -127,6 +127,7 @@ with open(filename,'w') as log:
                     ard.send_arduino_cmd_motor(u1,u2)
 
     #En lissajou :
+    print("Entering LISSAJOU")
     while True:
         try :
             lat,lon = get_gps()
