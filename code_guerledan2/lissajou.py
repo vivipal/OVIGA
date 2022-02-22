@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from roblib import *  # available at https://www.ensta-bretagne.fr/jaulin/roblib.py
-
+from ddboat_tools import *
 
 def f(x,u):
     x,u=x.flatten(),u.flatten()
@@ -32,54 +32,31 @@ def control(x,w,dw):
                [x2]])
     dy = array([[x4*cos(x3)],
                 [x4*sin(x3)]])
-
-    K = 100
+    K = 5
     ddy = K*sign((w-y + (dw-dy)))
-
     u = inv(Ax)@ddy
-
+    print(u)
     return u
 
-def lissajou(x):
-    a1, a2 = 48.19881166666667,-3.0156366666666665
-    ax=init_figure(a1-50,a1+50,a2-50,a2+50)
-    dt = 0.02
-    R2 = 30
-    T = 2*pi
-    N = 1
-    nbato = 1
+def lissajou(x,t,centre=(48.19881166666667,-3.0156366666666665),R=30,i=9,N=9,T=120):
+    a1,a2 = coord2cart(centre).flatten()
 
-    # for t in arange(0,30,dt) :
-
-    k = 2*pi/T
-    phi = 2*pi*nbato/N
-    w=array([[a1 + R2*cos(k*t + phi)], [a2 + R2*sin(2*(k*t + phi))]])
-    dw=array([[-R2*k*sin(k*t + phi)], [2*k*R2*cos(2*(k*t + phi))]])
-    ddw=array([[-R2*k**2*cos(k*t + phi)], [-4*k**2*R2*sin(2*(k*t + phi))]])
+    w  =array([ [a1 + R*cos(2*np.pi*(t/T+i/N))]               , [a2 + R*sin(4*np.pi*(t/T+i/N))] ])
+    dw =array([ [-(2/T)*np.pi*R*sin(2*np.pi*(t/T+i/N))]       , [(4/T)*np.pi*R*cos(4*np.pi*(t/T+i/N))] ])
+    ddw=array([ [-((2/T)*np.pi)**2 *R*cos(2*np.pi*(t/T+i/N))] , [-((4/T)*np.pi)**2 *R*sin(4*np.pi*(t/T+i/N))] ])
+    draw_disk(ax,w,0.5,"red")
     return(control(x,w,dw))
 
 if __name__ == "__main__":
-    a1, a2 = 48.19881166666667,-3.0156366666666665
-    ax=init_figure(a1-50,a1+50,a2-50,a2+50)
-    x = array([[10],[0],[1],[1]])
-    dt = 0.02
-    x = array([[10],[0],[1],[1]])
-    R2 = 30
-    T = 2*pi
-    N = 1
-    nbato = 1
+    centre=(48.19881166666667,-3.0156366666666665)
+    a1,a2 = coord2cart(centre).flatten()
 
+    x = array([[a1],[a2],[0.1],[0.1]])
+
+    ax=init_figure(a1-50,a1+50,a2-50,a2+50)
+    dt=0.05
     for t in arange(0,30,dt) :
         clear(ax)
-        # plot(L*cos(s), L*sin(3*s),color='magenta')
-
-        k = 2*pi/T
-        phi = 2*pi*nbato/N
-        w=array([[a1 + R2*cos(k*t + phi)], [a2 + R2*sin(2*(k*t + phi))]])
-        dw=array([[-R2*k*sin(k*t + phi)], [2*k*R2*cos(2*(k*t + phi))]])
-        ddw=array([[-R2*k**2*cos(k*t + phi)], [-4*k**2*R2*sin(2*(k*t + phi))]])
-        draw_disk(ax,w,0.5,"red")
-        u=control(x,w,dw)
-        # u=control_fb(x,w,dw,ddw)
+        u=lissajou(x,t)
         x = x + dt*f(x,u)
         draw_tank(x,'red')
