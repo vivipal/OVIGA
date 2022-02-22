@@ -39,7 +39,7 @@ X,Y = [],[]
 
 
 
-WPs = [(48,1989495, -3,0148023),(48.1992526, -3.0151409),(48,1989495, -3,0148023)]
+WPs = [(48,1989495, -3,0148023),(48.19926166, -3.01513833),(48,1989495, -3,0148023)]
 nb_wp = len(WPs)
 t0 = time.time()
 
@@ -62,9 +62,7 @@ with open(filename,'w') as log:
                 pass
             raw_imu = imu.read_mag_raw()
             cap = get_compass_from_raw(raw_imu)
-            cap_cons = follow_line_coord(WPs[i],next_wp,(lat,lon),6) - np.pi
-
-
+            cap_cons = follow_line_coord(WPs[i],next_wp,(lat,lon),6)
 
             dt = time.time() - t_motor
             if dt > 0.05:
@@ -76,11 +74,5 @@ with open(filename,'w') as log:
 
             # print("\nt={:.3f}\n heading to {} wp\n {} {}\n cap consigne : {:.0f} cap réel : {:.0f}\n u1 = {} u2 = {}\n w1= {} w2 = {}\n\n\n----------------".format(time.time()-t0,i+1,lat,lon,cap_cons*180/np.pi,cap*180/np.pi,u1,u2,w1_cons,w2_cons))
             log.write("{};{};{};{};{};{}\n".format(time.time()-t0,i+1,lat,lon,cap_cons,cap))
-
-
-
-
-
-
 
         time.sleep(0.5)
