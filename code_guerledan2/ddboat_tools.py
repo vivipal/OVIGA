@@ -45,7 +45,7 @@ def regu_mot(w_cons, w_reel, u, K):
 
 def cmd_moteur(encod,old_odo1,old_odo2,dt,u1,u2,w1_cons,w2_cons,Km1=0.2,Km2=0.2):
     """ Fonction régulation en vitesse des moteurs """
-    # encod.get_sync()
+    encod.get_sync()
     sync,data_encoders = encod.read_packet(debug=False)
     # w1_reel = -(old_odo1 - data_encoders[3]) / (8*dt)
     # w2_reel = -(data_encoders[4] - old_odo2) / (8*dt)
