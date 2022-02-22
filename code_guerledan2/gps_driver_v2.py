@@ -138,7 +138,7 @@ if __name__ == "__main__":
     cnt=0
     while True:
         vtg_ok,vtg_data=gps.read_vtg_non_blocking()
-        if gll_ok:
+        if vtg_ok:
             print (vtg_data)
             cnt += 1
             if cnt==20:
