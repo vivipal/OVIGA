@@ -7,7 +7,7 @@ def f(x,u):
     xdot = array([[x[3]*cos(x[2])],[x[3]*sin(x[2])],[u[0]],[u[1]]])
     return(xdot)
 
-def control(x,w,dw,ddw):
+def control(x,w,dw):
     x1, x2, x3, x4 = x.flatten()
 
     Ax = array([[cos(x3), -x4*sin(x3)],
@@ -17,31 +17,36 @@ def control(x,w,dw,ddw):
     dy = array([[x4*cos(x3)],
                 [x4*sin(x3)]])
 
-    K = 100
-    ddy = K*sign((w-y + 2*(dw-dy)) + ddw)
+    K = 10
+    ddy = K*sign((w-y + (dw-dy)))
+
+    # ddy = w-y + 2*(dw-dy) + ddw
 
     u = inv(Ax)@ddy
 
     return u
 
 
-
+ax=init_figure(-50,50,-50,50)
+x = array([[10],[0],[1],[1]])
 dt = 0.02
 x = array([[10],[0],[1],[1]])
-L=10
-s = arange(0,2*pi,0.01)
 R2 = 30
-T = 10
-N = 9
-nbato = 12
+T = 2*pi
+N = 1
+nbato = 1
 a1, a2 = 0,0
 
 for t in arange(0,30,dt) :
+    clear(ax)
+    # plot(L*cos(s), L*sin(3*s),color='magenta')
 
     k = 2*pi/T
     phi = 2*pi*nbato/N
     w=array([[a1 + R2*cos(k*t + phi)], [a2 + R2*sin(k*t + phi)]])
     dw=array([[-R2*k*sin(k*t + phi)], [k*R2*cos(k*t + phi)]])
     ddw=array([[-R2*k**2*cos(k*t + phi)], [-k**2*R2*sin(k*t + phi)]])
-
-    u=control(x,w,dw,ddw)
+    draw_disk(ax,w,0.5,"red")
+    u=control(x,w,dw)
+    x = x + dt*f(x,u)
+    draw_tank(x,'red')
