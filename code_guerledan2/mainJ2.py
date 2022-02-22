@@ -129,7 +129,12 @@ with open(filename,'w') as log:
     print("LISSAJOU")
     #En lissajou :
     while True:
-        x = array([[get_gps()[0]],[get_gps()[1]],[get_compass_from_raw(raw_imu)],[0.5]])
+        try :
+            lat,lon = get_gps()
+        except :
+            pass
+        px, py=coord2cart((lat,lon)).flatten()
+        x = array([[px],[py],[get_compass_from_raw(raw_imu)],[0.5]])
         u = lissajou(x)
         wmax_old=(w1_cons+w2_cons)/2
 
