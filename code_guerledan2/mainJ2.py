@@ -56,7 +56,7 @@ start_d = 8
 start_m = 10
 start_y = 2021
 
-temps_attente = 10/60
+temps_attente = int(10/60)
 
 datetime_start = datetime(start_y, start_m, start_d,start_h,start_min,0)
 datetime_wait_wp = (datetime(start_y, start_m, start_d,start_h,start_min+temps_attente,0),datetime(start_y,start_m,start_d,start_h,start_min,0))
