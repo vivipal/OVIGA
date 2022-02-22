@@ -91,6 +91,7 @@ with open(filename,'w') as log:
                 except :
                     print("Erreur encodeur")
                 t_motor = time.time()
+                print(u1,u2)
                 ard.send_arduino_cmd_motor(u1,u2)
 
             # print("\nt={:.3f}\n heading to {} wp\n {} {}\n cap consigne : {:.0f} cap réel : {:.0f}\n u1 = {} u2 = {}\n w1= {} w2 = {}\n\n\n----------------".format(time.time()-t0,i+1,lat,lon,cap_cons*180/np.pi,cap*180/np.pi,u1,u2,w1_cons,w2_cons))
