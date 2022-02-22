@@ -81,8 +81,8 @@ with open(filename,'w') as log:
                 pass
             raw_imu = imu.read_mag_raw()
             cap = get_compass_from_raw(raw_imu)
-            cap_cons = follow_line_coord(WPs[i],next_wp,(lat,lon),6)
-
+            cap_cons = follow_line_coord(WPs[i],next_wp,(lat,lon),6) - np.pi
+            print(cap, cap_cons)
             dt = time.time() - t_motor
             if dt > 0.05:
                 w1_cons, w2_cons = cmdcap(cap_cons,cap)
@@ -124,6 +124,7 @@ with open(filename,'w') as log:
                     t_motor = time.time()
                     ard.send_arduino_cmd_motor(u1,u2)
 
+    print("LISSAJOU")
     #En lissajou :
     while True:
         x = array([[get_gps()[0]],[get_gps()[1]],[get_compass_from_raw(raw_imu)],[0.5]])
