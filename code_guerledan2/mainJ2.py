@@ -121,3 +121,7 @@ with open(filename,'w') as log:
                         print("Erreur encodeur")
                     t_motor = time.time()
                     ard.send_arduino_cmd_motor(u1,u2)
+
+    #En lissajou :
+    x = array([[get_gps()[0]],[get_gps()[1]],[get_compass_from_raw(raw_imu)],[0.5]])
+    u = lissajou(x)
