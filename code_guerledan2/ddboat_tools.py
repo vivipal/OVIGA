@@ -43,10 +43,10 @@ def regu_mot(w_cons, w_reel, u, K):
     u += K*err
     return u
 
-def cmd_moteur(data_encoders,old_odo1,old_odo2,dt,u1,u2,w1_cons,w2_cons,Km1=0.2,Km2=0.2):
+def cmd_moteur(encod,old_odo1,old_odo2,dt,u1,u2,w1_cons,w2_cons,Km1=0.2,Km2=0.2):
     """ Fonction régulation en vitesse des moteurs """
-    # encod.get_sync()
-    # sync,data_encoders = encod.read_packet(debug=False)
+    encod.get_sync()
+    sync,data_encoders = encod.read_packet(debug=False)
     # w1_reel = -(old_odo1 - data_encoders[3]) / (8*dt)
     # w2_reel = -(data_encoders[4] - old_odo2) / (8*dt)
 
@@ -85,12 +85,13 @@ def cmdcap(cap, cap_cons = 0, v_neutre = 200, theta_lim=np.pi/3):
     return(w1_cons,w2_cons)
 
 def cmdlissajou(u,w_max_old):
-    print("u={}".format(u))
+    u1,u2=u.flatten()
+    print("u1={}  |  u2={}".format(u1,u2))
     Kacc=1
     Krot=1
-    print("w_max={}  |  w_min={}".format(w_max_old +Kacc*u[0] , w_max -Krot*abs(u[1])))
-    w_max = min(vmax,max(0,w_max_old +Kacc*u[0]))
-    w_min = min(vmax,max(0,w_max -Krot*abs(u[1])))
+    print("w_max={}  |  w_min={}".format(w_max_old +Kacc*u1 , w_max -Krot*abs(u2)))
+    w_max = min(vmax,max(0,w_max_old +Kacc*u1))
+    w_min = min(vmax,max(0,w_max -Krot*abs(u2)))
     if u[1]>0:
         w1_cons=w_max
         w2_cons=w_min
