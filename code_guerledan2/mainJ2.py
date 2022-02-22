@@ -104,14 +104,14 @@ with open(filename,'w') as log:
 
             tw0 = time.time()
             #On commence à syncroniser si il reste 5 seconde
-            if (datetime_wait_wp[i]-datetime.now()).seconds <5 :
+            if (datetime_wait_wp[i]-datetime.now()).seconds < 5 :
                 try :
                     encod.get_sync()
                 except:
                     pass
 
             #Sinon on retourne vers le point
-            else:
+            elif coords_dist(next_wp, get_gps()) > 8:
                 dt = time.time() - t_motor
                 if dt > 0.05:
                     w1_cons, w2_cons = cmdcap(cap_cons,cap)

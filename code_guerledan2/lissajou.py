@@ -45,5 +45,3 @@ for t in arange(0,30,dt) :
     ddw=array([[-R2*k**2*cos(k*t + phi)], [-k**2*R2*sin(k*t + phi)]])
 
     u=control(x,w,dw,ddw)
-
-    x = x + dt*f(x,u)
