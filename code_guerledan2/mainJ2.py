@@ -86,6 +86,7 @@ with open(filename,'w') as log:
             dt = time.time() - t_motor
             if dt > 0.05:
                 w1_cons, w2_cons = cmdcap(cap_cons,cap)
+                print(w1_cons, w2_cons)
                 try:
                     old_odo1,old_odo2,u1,u2 = cmd_moteur(encod,old_odo1,old_odo2,dt,u1,u2,w1_cons,w2_cons)
                 except :
