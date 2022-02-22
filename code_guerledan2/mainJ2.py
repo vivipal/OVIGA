@@ -36,7 +36,7 @@ X,Y = [],[]
 
 point_depart = (48.1989495, -3.0148023)
 a1, a2 = 48.19881166666667,-3.0156366666666665
-R1 = 70
+R1 = 40
 nbato = 9
 alphai = nbato*2*pi/9
 point_cercle = (a1 + R1*cos(alphai), a2 + R1*sin(alphai))
@@ -56,8 +56,10 @@ start_d = 8
 start_m = 10
 start_y = 2021
 
+temps_attente = 10/60
+
 datetime_start = datetime(start_y, start_m, start_d,start_h,start_min,0)
-datetime_wait_wp = (datetime(start_y, start_m, start_d,start_h,start_min+3,0),datetime(start_y, start_m, start_d,start_h,start_min+6,0),datetime(start_y,start_m,start_d,start_h,start_min,0))
+datetime_wait_wp = (datetime(start_y, start_m, start_d,start_h,start_min+temps_attente,0),datetime(start_y,start_m,start_d,start_h,start_min,0))
 
 while datetime.now() < datetime_start :
     print("Start in {} seconds".format((datetime_start-datetime.now()).seconds))

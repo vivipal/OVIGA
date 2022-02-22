@@ -25,7 +25,7 @@ def control_fb(x,w,dw,ddw):
 
 def control(x,w,dw):
     x1, x2, x3, x4 = x.flatten()
-    x4 = 0.5
+    # x4 = 0.5
     Ax = array([[cos(x3), -x4*sin(x3)],
                 [sin(x3), x4*cos(x3)]])
     y = array([[x1],
@@ -53,9 +53,9 @@ def lissajou(x):
 
     k = 2*pi/T
     phi = 2*pi*nbato/N
-    w=array([[a1 + R2*cos(k*t + phi)], [a2 + R2*sin(k*t + phi)]])
-    dw=array([[-R2*k*sin(k*t + phi)], [k*R2*cos(k*t + phi)]])
-    ddw=array([[-R2*k**2*cos(k*t + phi)], [-k**2*R2*sin(k*t + phi)]])
+    w=array([[a1 + R2*cos(k*t + phi)], [a2 + R2*sin(2*(k*t + phi))]])
+    dw=array([[-R2*k*sin(k*t + phi)], [2*k*R2*cos(2*(k*t + phi))]])
+    ddw=array([[-R2*k**2*cos(k*t + phi)], [-4*k**2*R2*sin(2*(k*t + phi))]])
     return(control(x,w,dw))
 
 if __name__ == "__main__":
@@ -75,13 +75,11 @@ if __name__ == "__main__":
 
         k = 2*pi/T
         phi = 2*pi*nbato/N
-        w=array([[a1 + R2*cos(k*t + phi)], [a2 + R2*sin(k*t + phi)]])
-        dw=array([[-R2*k*sin(k*t + phi)], [k*R2*cos(k*t + phi)]])
-        ddw=array([[-R2*k**2*cos(k*t + phi)], [-k**2*R2*sin(k*t + phi)]])
+        w=array([[a1 + R2*cos(k*t + phi)], [a2 + R2*sin(2*(k*t + phi))]])
+        dw=array([[-R2*k*sin(k*t + phi)], [2*k*R2*cos(2*(k*t + phi))]])
+        ddw=array([[-R2*k**2*cos(k*t + phi)], [-4*k**2*R2*sin(2*(k*t + phi))]])
         draw_disk(ax,w,0.5,"red")
         u=control(x,w,dw)
-        print(u)
-        pause(1)
         # u=control_fb(x,w,dw,ddw)
         x = x + dt*f(x,u)
         draw_tank(x,'red')
