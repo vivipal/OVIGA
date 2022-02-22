@@ -32,12 +32,12 @@ X,Y = [],[]
 
 point_depart = get_gps()
 point_bouee = 48.19881166666667,-3.0156366666666665
-a1, a2 = point_bouee
+a1, a2 = coord2cart(point_bouee).flatten()
 R1 = 40
 nbato = 9 # numero de notre bateau
 N = 9
 alphai = nbato*2*pi/N
-point_cercle = (a1 + R1*cos(alphai), a2 + R1*sin(alphai))
+point_cercle = cart2coord((a1 + R1*cos(alphai), a2 + R1*sin(alphai)))
 
 WPs = [point_depart,point_cercle]
 
