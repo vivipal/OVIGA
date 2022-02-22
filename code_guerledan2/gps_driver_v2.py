@@ -71,7 +71,7 @@ class GpsIO:
                 if str(v[0:6]) == "$GPVTG":
                     vv = v.split(",")
                     if len(vv[7]) > 0:
-                        val[0] = float(vv[7])
+                        val = float(vv[7])
                     break # GPVTG found !  exit !
         return val
 
@@ -107,7 +107,7 @@ class GpsIO:
             if str(st[0:6]) == "$GPVTG":
                 vv = st.split(",")
                 if len(vv[7]) > 0:
-                    val[0] = float(vv[7])
+                    val = float(vv[7])
                 msg=True
         return msg,val
 
