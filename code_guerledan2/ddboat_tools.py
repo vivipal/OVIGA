@@ -86,10 +86,9 @@ def cmdcap(cap, cap_cons = 0, v_neutre = 200, theta_lim=np.pi/3):
 
 def cmdlissajou(u,w_max_old):
     u1,u2=u.flatten()
-    print("u1={}  |  u2={}".format(u1,u2))
     Kacc=1
     Krot=1
-    print("w_max={}  |  w_min={}".format(w_max_old +Kacc*u1 , w_max -Krot*abs(u2)))
+    print("\n u1 = {} u2 = {}\n wmax= {} wmin = {}\n\n\n----------------".format(u1,u2,w_max_old +Kacc*u1,w_max -Krot*abs(u2)))
     w_max = min(vmax,max(0,w_max_old +Kacc*u1))
     w_min = min(vmax,max(0,w_max -Krot*abs(u2)))
     if u[1]>0:
